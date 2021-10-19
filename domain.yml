@@ -1,0 +1,105 @@
+version: "2.0"
+
+intents:
+  - greet
+  - goodbye
+  - affirm
+  - deny
+  - mood_great
+  - mood_unhappy
+  - bot_challenge
+  - reload
+  - say_phone_number
+  - say_amount
+  - say_account_number
+  - cancel_last_reload
+  - refund
+
+entities:
+  - account_number
+  - amount
+  - phone_number
+
+slots:
+  account_number:
+    type: text
+  amount:
+    type: text
+  phone_number:
+    type: text
+  time_after_last_reload:
+    type: text
+
+actions:
+  - action_reload
+  - action_cancel_reload
+  - action_refund
+
+responses:
+  utter_greet:
+    - text: "வணக்கம்! எப்படி இருக்கிறீர்கள்?"
+    - text: "வணக்கம்!"
+    - text: "இந்நேர வணக்கங்கள்!"
+
+  utter_success:
+    - text: "வெற்றிகரமாக முடிந்தது"
+    - text: "வெற்றி"
+
+  utter_failure:
+    - text: "தோல்வியில் முடிந்துள்ளது"
+    - text: "முடிக்க முடியவில்லை"
+    - text: "தோல்வி"
+
+  utter_reload_success:
+    - text: "மீள்நிரப்பல் வெற்றிகரமாக முடிந்தது. தொலைபேசி எண்: {phone_number}. மீள்நிரப்பல் தாெகை: {amount}"
+
+  utter_cancel_success:
+    - text: "மீள்நிரப்பல் வெற்றிகரமாக தடுக்கப்பட்டுவிட்டது. தொலைபேசி எண்: {phone_number}. மீள்நிரப்பல் தாெகை: {amount}"
+
+  utter_reload_failure:
+    - text: "மீள்நிரப்பல் தோல்வியில் முடிந்தது. தொலைபேசி எண்: {phone_number}. மீள்நிரப்பல் தாெகை: {amount}"
+
+  utter_thank_you:
+    - text: "மிக்க நன்றி :)"
+
+  utter_cheer_up:
+    - text: "Best I can do is to tell you to 'Man Up'"
+
+  utter_did_that_help:
+    - text: "இது உங்களுக்கு உதவியதா?"
+
+  utter_happy:
+    - text: "சிறந்தது, தொடருங்கள்!"
+    - text: "மகிழ்ச்சி, தொடரவும்"
+
+  utter_goodbye:
+    - text: "வருகிறேன்"
+    - text: "சென்று வருகிறேன்"
+    - text: "மீண்டும் சந்திப்போம்"
+
+  utter_iamabot:
+    - text: "நான் ஒரு செயற்கை உதவியாளர்(AI), Rasa மூலம் உருப்பெற்றுள்ளேன்"
+    - text: "நான் ஒரு செயற்கை உதவியாளர்(AI), Rasaஇனால் உருவாக்கப்பட்டுள்ளேன்"
+
+  utter_request_phone_number:
+    - text: "உங்கள் தொலைபேசி இலக்கம் என்ன?"
+    - text: "உங்கள் தொலைபேசி இலக்கத்தை தருக"
+    - text: "உங்கள் தொலைபேசி எண் யாது?"
+
+  utter_request_account_number:
+    - text: "உங்கள் கணக்கு இலக்கம் என்ன?"
+    - text: "உங்கள் கணக்கிலக்கத்தை தருக"
+
+  utter_request_amount:
+    - text: "நீங்கள் மீள்நிரப்பவேண்டிய தொகை எவ்வளவு?"
+    - text: "நீங்கள் மீள்நிரப்பவேண்டிய தொகைைய தருக"
+
+  utter_suspicious_too_big:
+    - text: "உங்கள் மீள்நிரப்பல் தொகை சராசரியை விட மிக அதிகமாக உள்ளது. சரிபார்க்கவும்!!!"
+
+  utter_suspicious_too_low:
+    - text: "உங்கள் மீள்நிரப்பல் தொகை சராசரியை விட குறைவாக உள்ளது. சரிபார்க்கவும்!!!"
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true

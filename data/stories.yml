@@ -1,0 +1,79 @@
+version: "2.0"
+
+stories:
+
+  - story: happy path
+    steps:
+      - intent: greet
+      - action: utter_greet
+      - intent: mood_great
+      - action: utter_happy
+
+  - story: sad path 1
+    steps:
+      - intent: greet
+      - action: utter_greet
+      - intent: mood_unhappy
+      - action: utter_cheer_up
+      - action: utter_did_that_help
+      - intent: affirm
+      - action: utter_happy
+
+  - story: sad path 2
+    steps:
+      - intent: greet
+      - action: utter_greet
+      - intent: mood_unhappy
+      - action: utter_cheer_up
+      - action: utter_did_that_help
+      - intent: deny
+      - action: utter_goodbye
+
+  - story: reload 1
+    steps:
+      - intent: greet
+      - action: utter_greet
+      - intent: reload
+      - action: utter_request_phone_number
+      - intent: say_phone_number
+      - action: utter_request_account_number
+      - intent: say_account_number
+      - action: utter_request_amount
+      - intent: say_amount
+      - action: action_reload
+
+  - story: reload 2
+    steps:
+      - intent: reload
+      - action: utter_request_phone_number
+      - intent: say_phone_number
+      - action: utter_request_account_number
+      - intent: say_account_number
+      - action: utter_request_amount
+      - intent: say_amount
+      - action: action_reload
+
+  - story: cancel reload
+    steps:
+      - intent: cancel_last_reload
+      - action: action_cancel_reload
+
+  - story: cancel reload 2
+    steps:
+      - intent: greet
+      - action: utter_greet
+      - intent: cancel_last_reload
+      - action: action_cancel_reload
+
+  - story: do refund 2
+    steps:
+      - intent: greet
+      - action: utter_greet
+      - intent: refund
+      - action: action_refund
+
+  - story: do refund
+    steps:
+      - intent: refund
+      - action: action_refund
+
