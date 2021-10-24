@@ -83,3 +83,10 @@ stories:
     steps:
       - intent: refund
       - action: action_refund
+
+  # TODO: template for a story
+  #  what_coverage
+  #  tell_province
+  #  ask_district
+  #  tell_district
+  #  tell_coverage

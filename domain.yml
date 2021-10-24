@@ -100,6 +100,16 @@ responses:
   utter_suspicious_too_low:
     - text: "உங்கள் மீள்நிரப்பல் தொகை சராசரியை விட குறைவாக உள்ளது. சரிபார்க்கவும்!!!"
 
+  utter_ask_province:
+    - text: "உங்கள் மாகாணம் என்ன?"
+    - text: "உங்கள் மாகாணம் யாது?"
+    - text: "உங்கள் மாகாணத்தை தருக?"
+
+  utter_ask_district:
+    - text: "உங்கள் மாவட்டம் என்ன?"
+    - text: "உங்கள் மாவட்டம் யாது?"
+    - text: "உங்கள் மாவட்டத்தை தருக?"
+
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true
