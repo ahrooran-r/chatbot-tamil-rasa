@@ -2,6 +2,9 @@ version: "2.0"
 
 nlu:
 
+  # this is standard greet intent. I have added additional Tamil greet statements and some English statements as well
+  # the reason why I added English statements is that people tend to mix languages when they chat
+  # so a mixed approach is more practical
   - intent: greet
     examples: |
       - வணக்கம்'
@@ -36,6 +39,8 @@ nlu:
       - இனிய இரவு
       - இனிய இரவு வணக்கம்
 
+  # this is standard goodbye intent.
+  # I have added both Tamil and English statements
   - intent: goodbye
     examples: |
       - வருகிறேன்
@@ -67,6 +72,8 @@ nlu:
       - ok, bye
       - ok.bye
 
+  # this is standard affirm intent.
+  # I have added both Tamil and English statements
   - intent: affirm
     examples: |
       - ஆம்
@@ -95,6 +102,8 @@ nlu:
       - that sounds good
       - correct
 
+  # this is standard deny intent.
+  # I have added both Tamil and English statements
   - intent: deny
     examples: |
       - இல்லை
@@ -129,6 +138,8 @@ nlu:
       - no way
       - not really
 
+  # this is standard greet intent.
+  # I have added both Tamil and English statements
   - intent: mood_great
     examples: |
       - சரியானது
@@ -163,6 +174,8 @@ nlu:
       - so good
       - so perfect
 
+  # this is standard unhappy intent.
+  # I have added both Tamil and English statements
   - intent: mood_unhappy
     examples: |
       - இன்று மோசமான நாள்
@@ -190,6 +203,8 @@ nlu:
       - so saad
       - so sad
 
+  # this is standard bot challenge intent.
+  # I have added both Tamil and English statements
   - intent: bot_challenge
     examples: |
       - are you a bot?
@@ -201,6 +216,9 @@ nlu:
       - நீங்கள் மனிதரா?
       - நான் யாரோடு கதைத்துக்கொண்டு இருக்கிறேன்?
 
+  # this is reload intent.
+  # I have added Tamil, English like and English statements
+  # this is one of the starting piece of conversations that relates to the functionality
   - intent: reload
     examples: |
       - மீள்நிரப்பு
@@ -212,10 +230,14 @@ nlu:
       - ரீலோட் பண்ணு
       - reload
 
+  # this is a regex for phone number
+  # TODO: I am facing issues with this regex as the model cannot understand telephone number properly
+  # TODO: but it understands other numbers perfectly. I still cannot figure out why :(
   - regex: phone_number
     examples: |
       - \d{10,10}
 
+  # this intent learns phone number from user and places it in a slot
   - intent: say_phone_number
     examples: |
       - [0771011123](phone_number)
@@ -224,10 +246,13 @@ nlu:
       - இலக்கம் [0711011123](phone_number)
       - இல [0123456789](phone_numer)
 
+  # this is regex for amount
+  # model can understand this
   - regex: amount
     examples: |
       - \d{2,5}
 
+  # takes amount from user and places it in amount slot
   - intent: say_amount
     examples: |
       - ரூபா [50](amount)
@@ -237,10 +262,14 @@ nlu:
       - [100](amount)/=
       - [100](amount) மட்டும்
 
+  # this is regex for account number
+  # for simplicity I haven't added additional bank details and make this more complex than necessary
+  # the goal for me is to add some good stories which are simple and try different combinations of built in tools
   - regex: account_number
     examples: |
       - \d{10,12}
 
+  # takes account number from user and places it in account_number slot
   - intent: say_account_number
     examples: |
       - [1234567891](account_number)
@@ -250,6 +279,8 @@ nlu:
       - இதுவே எனது வங்கி இலக்கம் [1234567891](account_number)
       - என் வங்கி இலக்கம் [1234567891](account_number)
 
+  # cancels last reload
+  # stores time stamp of last reload and cancels it
   - intent: cancel_last_reload
     examples: |
       - கடைசி மீள்நிரப்பலை தடுக்கவும்
@@ -259,8 +290,62 @@ nlu:
       - தடு
       - நிப்பாட்டு
 
+  # refund intent
   - intent: refund
     examples: |
       - கடைசி மீள்நிரப்பலை திருப்பி கொடு
       - திருப்பி கொடு
       - திருப்பு
+
+  - intent: what_coverage
+    examples: |
+      - கவரேஜ்
+      - கவரேச்
+      - கவரேஜ் எவ்வளவு
+      - கவரேஜ் என்னமாதிரி?
+      - கவரேஜ் என்ன மாதிரி
+      - இங்க கவரேஜ் எவ்வளவு
+      - இங்க கவரேஜ் என்னமாதிரி?
+      - என்ர இடத்தில கவரேஜ் என்னமாதிரி
+
+  - intent: tell_place
+    examples: |
+      - [மத்திய மாகாணம்](province)
+      - [கிழக்கு மாகாணம்](province)
+      - [வடமத்திய மாகாணம்](province)
+      - [வட மத்திய மாகாணம்](province)
+      - [வட-மத்திய மாகாணம்](province)
+      - [வடக்கு மாகாணம்](province)
+      - [வடமேற்கு மாகாணம்](province)
+      - [சபரகமுவா மாகாணம்](province)
+      - [தெற்கு மாகாணம்](province)
+      - [ஊவா மாகாணம்](province)
+      - [மேற்கு மாகாணம்](province)
+
+  - intent: tell_district
+    examples: |
+      - [அம்பாறை](district)
+      - [அனுராதபுரம்](district)
+      - [பதுளை](district)
+      - [மட்டக்களப்பு](district)
+      - [கொழும்பு](district)
+      - [காலி](district)
+      - [கம்பகா](district)
+      - [கம்பாந்தோட்டை](district)
+      - [யாழ்ப்பாணம்](district)
+      - [கழுத்தறை](district)
+      - [கண்டி](district)
+      - [கேகாலை](district)
+      - [கிழிநொச்சி](district)
+      - [குருணாகலை](district)
+      - [மன்னார்](district)
+      - [மாத்தளை](district)
+      - [மாத்தறை](district)
+      - [மொனராகலை](district)
+      - [முல்லைத்தீவு](district)
+      - [நுவரெலியா](district)
+      - [பொலன்னறுவை](district)
+      - [புத்தளம்](district)
+      - [இரத்தினபுரி](district)
+      - [திருகோணமலை](district)
+      - [வவுனியா](district)
