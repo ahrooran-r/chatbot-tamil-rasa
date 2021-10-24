@@ -1,5 +1,7 @@
 version: "2.0"
 
+# these are pretty standard rules
+# I'm planning to add some rules which show the details of model etc.
 rules:
 
   - rule: Say goodbye anytime the user says goodbye

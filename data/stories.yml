@@ -2,6 +2,7 @@ version: "2.0"
 
 stories:
 
+  # standard greet
   - story: happy path
     steps:
       - intent: greet
@@ -29,6 +30,7 @@ stories:
       - intent: deny
       - action: utter_goodbye
 
+  # reload complete scenario
   - story: reload 1
     steps:
       - intent: greet
@@ -42,6 +44,7 @@ stories:
       - intent: say_amount
       - action: action_reload
 
+  # reload concise scenario
   - story: reload 2
     steps:
       - intent: reload
@@ -53,11 +56,13 @@ stories:
       - intent: say_amount
       - action: action_reload
 
+  # cancel reload concise scenario
   - story: cancel reload
     steps:
       - intent: cancel_last_reload
       - action: action_cancel_reload
 
+  # cancel reload complete scenario
   - story: cancel reload 2
     steps:
       - intent: greet
@@ -65,6 +70,7 @@ stories:
       - intent: cancel_last_reload
       - action: action_cancel_reload
 
+  # do a refund to user complete scenario
   - story: do refund 2
     steps:
       - intent: greet
@@ -72,8 +78,8 @@ stories:
       - intent: refund
       - action: action_refund
 
+  # do a refund to user concise scenario
   - story: do refund
     steps:
       - intent: refund
       - action: action_refund
-
