@@ -7,7 +7,20 @@ pipeline:
   # # If you'd like to customize it, uncomment and adjust the pipeline.
   # # See https://rasa.com/docs/rasa/tuning-your-model for more information.
   - name: WhitespaceTokenizer
+  - name: RegexEntityExtractor
+      # text will be processed with case insensitive as default
+      case_sensitive: False
+      # use lookup tables to extract entities
+      use_lookup_tables: True
+      # use regexes to extract entities
+      use_regexes: True
+      # use match word boundaries for lookup table
+      "use_word_boundaries": False
   - name: RegexFeaturizer
+      # Text will be processed with case sensitive as default
+      "case_sensitive": True
+      # use match word boundaries for lookup table
+      "use_word_boundaries": True
   - name: LexicalSyntacticFeaturizer
   - name: CountVectorsFeaturizer
   - name: CountVectorsFeaturizer

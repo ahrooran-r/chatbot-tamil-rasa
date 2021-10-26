@@ -235,7 +235,7 @@ nlu:
   # TODO: but it understands other numbers perfectly. I still cannot figure out why :(
   - regex: phone_number
     examples: |
-      - \d{10,10}
+      - [0-9]{10}
 
   # this intent learns phone number from user and places it in a slot
   - intent: say_phone_number
