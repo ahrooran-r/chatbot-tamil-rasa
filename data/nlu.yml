@@ -231,11 +231,11 @@ nlu:
       - reload
 
   # this is a regex for phone number
-  # TODO: I am facing issues with this regex as the model cannot understand telephone number properly
-  # TODO: but it understands other numbers perfectly. I still cannot figure out why :(
+  # https://stackoverflow.com/a/50122731/10582056
+  # I don't know why, but this works sometimes and sometimes don't
   - regex: phone_number
     examples: |
-      - [0-9]{10}
+      - (\+\d{1,3}\s?)?((\(\d{3}\)\s?)|(\d{3})(\s|-?))(\d{3}(\s|-?))(\d{4})(\s?(([E|e]xt[:|.|]?)|x|X)(\s?\d+))?
 
   # this intent learns phone number from user and places it in a slot
   - intent: say_phone_number
@@ -247,10 +247,10 @@ nlu:
       - இல [0123456789](phone_numer)
 
   # this is regex for amount
-  # model can understand this
+  # https://stackoverflow.com/a/354365/10582056
   - regex: amount
     examples: |
-      - \d{2,5}
+      - ^-?(?:0|[1-9]\d{0,2}(?:,?\d{3})*)(?:\.\d+)?$
 
   # takes amount from user and places it in amount slot
   - intent: say_amount
@@ -264,10 +264,11 @@ nlu:
 
   # this is regex for account number
   # for simplicity I haven't added additional bank details and make this more complex than necessary
-  # the goal for me is to add some good stories which are simple and try different combinations of built in tools
+  # the goal for me is to add some stories which are simple and try different combinations of built in tools
+  # # https://docs.opswat.com/mdcore/proactive-dlp/sample-regular-expressions
   - regex: account_number
     examples: |
-      - \d{10,12}
+      - \W*\d{8,17}\b
 
   # takes account number from user and places it in account_number slot
   - intent: say_account_number
