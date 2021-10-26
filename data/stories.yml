@@ -84,9 +84,12 @@ stories:
       - intent: refund
       - action: action_refund
 
-  # TODO: template for a story
-  #  what_coverage
-  #  tell_province
-  #  ask_district
-  #  tell_district
-  #  tell_coverage
+  # tells the coverage for a particular area
+  - story: find coverage
+    steps:
+      - intent: what_coverage
+      - action: utter_ask_province
+      - intent: tell_province
+      - action: utter_ask_district
+      - intent: tell_district
+      - action: action_tell_coverage

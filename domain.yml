@@ -14,6 +14,9 @@ intents:
   - say_account_number
   - cancel_last_reload
   - refund
+  - what_coverage
+  - tell_province
+  - tell_district
 
 entities:
   - account_number
@@ -34,6 +37,7 @@ actions:
   - action_reload
   - action_cancel_reload
   - action_refund
+  - action_tell_coverage
 
 responses:
   utter_greet:
