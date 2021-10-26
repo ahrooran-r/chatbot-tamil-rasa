@@ -20,8 +20,8 @@ class ActionReload(Action):
         account = tracker.get_slot("account_number")
         amount = tracker.get_slot("amount")
 
-        # print(f"{phone}, {account}, {amount}")
         # dispatcher.utter_message(text=f"{phone}, {account}, {amount}")
+        # dispatcher.utter_message(text=f"{type(phone)}, {type(account)}, {type(account)}")
 
         if phone is None:
             dispatcher.utter_message(text="தொலைபேசி எண் தரப்படவில்லை. மீண்டும் முதலிருந்து ஆரம்பிக்கவும்")
@@ -33,16 +33,18 @@ class ActionReload(Action):
             dispatcher.utter_message(text="தொகை தரப்படவில்லை. மீண்டும் முதலிருந்து ஆரம்பிக்கவும்")
             return []
 
-        if ActionReload.check_amount(amount) == 1:
-            dispatcher.utter_message(text="கூடுதலாக ஒரு பூச்சியத்தை இட்டுள்ளீர்கள் போலுள்ளது!!!")
+        if ActionReload.check_amount(int(amount)) == 0:
+            dispatcher.utter_message(text="மீள் நிரப்பல் தொகையைவிட அதிகமான / குறைவான தொகையை இட்டுள்ளீர்கள்")
+            dispatcher.utter_message(template="utter_reload_failure", phone_number=phone, amount=amount)
+        else:
+            if ActionReload.check_amount(int(amount)) == 1:
+                dispatcher.utter_message(text="கூடுதலாக ஒரு பூச்சியத்தை இட்டுள்ளீர்கள் போலுள்ளது!!!")
             if ActionReload.success_or_failure():
                 dispatcher.utter_message(template="utter_reload_success", phone_number=phone, amount=amount)
                 SlotSet(key="time_after_last_reload", value=time.time())
             else:
                 dispatcher.utter_message(template="utter_reload_failure", phone_number=phone, amount=amount)
-        else:
-            dispatcher.utter_message(text="மீள் நிரப்பல் தொகையைவிட அதிகமான தொகையை இட்டுள்ளீர்கள்")
-            dispatcher.utter_message(template="utter_reload_failure", phone_number=phone, amount=amount)
+
         return []
 
     @staticmethod
@@ -52,10 +54,10 @@ class ActionReload(Action):
 
     @staticmethod
     def check_amount(amount: int) -> int:
-        typical_amounts: list = [50, 100, 200, 500]
+        typical_amounts: list = [100, 200, 500]
         lower: int = 50
         upper: int = 10000
-        if any([amount % x for x in typical_amounts]):
+        if any([(amount / x > 10 and amount % x == 0) for x in typical_amounts]):
             return 1
         if amount < lower or amount > upper:
             return 0
@@ -117,3 +119,34 @@ class ActionRefund(Action):
                 return [FollowupAction("action_cancel_reload")]
 
         return []
+
+class ActionCoverage(Action):
+
+    def name(self) -> Text:
+        return "action_tell_coverage"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        # keep it simple
+        province = tracker.get_slot("province")
+        district = tracker.get_slot("district")
+
+        if ActionCoverage.success_or_failure(district):
+            dispatcher.utter_message(text=f"உங்கள் மாவட்டத்தில் {ActionCoverage.getRandomCoverage(district)}% கவரேஜ் உள்ளது")
+        else:
+            dispatcher.utter_message(text=f"உங்கள் மாவட்டத்தில் கவரேஜ் காணமுடியவில்லை. சற்று நேரம் தாமதிக்கவும்.")
+            time.sleep(2)
+            dispatcher.utter_message(text=f"உங்கள் மாகாணத்தில் {ActionCoverage.getRandomCoverage(province)}% கவரேஜ் உள்ளது")
+
+    @staticmethod
+    def success_or_failure(value: str) -> bool:
+        """this is to emulate randomness in output"""
+        random.seed(value)
+        return random.choice([True, False])
+
+    @staticmethod
+    def getRandomCoverage(value: str):
+        random.seed(value)
+        return random.randint(50, 99)
