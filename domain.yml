@@ -22,6 +22,8 @@ entities:
   - account_number
   - amount
   - phone_number
+  - province
+  - district
 
 slots:
   account_number:

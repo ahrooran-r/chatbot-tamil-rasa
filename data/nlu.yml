@@ -298,6 +298,7 @@ nlu:
       - திருப்பி கொடு
       - திருப்பு
 
+  # user intent for asking coverage
   - intent: what_coverage
     examples: |
       - கவரேஜ்
@@ -309,6 +310,7 @@ nlu:
       - இங்க கவரேஜ் என்னமாதிரி?
       - என்ர இடத்தில கவரேஜ் என்னமாதிரி
 
+  # user intent when he answers his province
   - intent: tell_province
     examples: |
       - [மத்திய மாகாணம்](province)
@@ -328,6 +330,7 @@ nlu:
       - நான் [மேற்கு மாகாணம்](province) இல் இருந்து வருகிறேன்
       - நான் [ஊவா மாகாணம்](province) இலிருந்து வருகிறேன்
 
+  # user intent when he answers his district
   - intent: tell_district
     examples: |
       - [அம்பாறை](district)
