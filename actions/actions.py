@@ -47,11 +47,11 @@ class ActionReload(Action):
             if ActionReload.success_or_failure():
                 # above condition randomises the output
                 dispatcher.utter_message(template="utter_reload_success", phone_number=phone, amount=amount)
-                SlotSet(key="time_after_last_reload", value=time.time())
+                return [SlotSet(key="time_after_last_reload", value=time.time())]
             else:
                 dispatcher.utter_message(template="utter_reload_failure", phone_number=phone, amount=amount)
 
-        return []
+        return [SlotSet(key="time_after_last_reload", value=0)]
 
     @staticmethod
     def success_or_failure() -> bool:
@@ -93,20 +93,21 @@ class ActionCancelReload(Action):
         # haven't added any validation
         # see above comments for detailed explanation
         phone = tracker.get_slot("phone_number")
-        amount = float(tracker.get_slot("amount"))
-        last_reload_time = float(tracker.get_slot("time_after_last_reload"))
+        last_reload_time = tracker.get_slot("time_after_last_reload")
+        amount = tracker.get_slot("amount")
 
-        if last_reload_time is None or last_reload_time == 0:
+        if last_reload_time is None or float(last_reload_time) == 0:
             dispatcher.utter_message(text="நீங்கள் கடைசியாக மீள்நிரப்பல் செய்தது போல தெரியவில்லை. ஆகவே இக் கோரிக்கை "
                                           "நிராகரிக்கப்படுகிறது")
         else:
+            last_reload_time = float(last_reload_time)
             # if more than 30s past last reload time, the cancel request would be denied
             if time.time() - last_reload_time > 30:
                 dispatcher.utter_message(text="மன்னிக்கவும். இக் கோரிக்கைக்கான காலவரையறை முடிந்துவிட்டது")
 
             else:
                 dispatcher.utter_message(template="utter_cancel_success", phone_number=phone, amount=amount)
-                SlotSet(key="time_after_last_reload", value=None)
+                return [SlotSet(key="time_after_last_reload", value=None)]
 
         return []
 
@@ -123,18 +124,19 @@ class ActionRefund(Action):
 
         # keep it simple
         account = tracker.get_slot("account_number")
-        amount = float(tracker.get_slot("amount"))
-        last_reload_time = int(tracker.get_slot("time_after_last_reload"))
+        amount = tracker.get_slot("amount")
+        last_reload_time = tracker.get_slot("time_after_last_reload")
 
-        if last_reload_time is None or last_reload_time == 0:
+        if last_reload_time is None or float(last_reload_time) == 0:
             dispatcher.utter_message(text="நீங்கள் கடைசியாக மீள்நிரப்பல் செய்தது போல தெரியவில்லை. அல்லது அதனை "
                                           "பிற்பாடு தடுத்து விட்டீர்கள். ஆகவே இக் கோரிக்கை நிராகரிக்கப்படுகிறது")
         else:
             # if more than 30s and less than 60s past last reload time, the refund request would be accepted
+            last_reload_time = float(last_reload_time)
             if 30 <= time.time() - last_reload_time <= 60:
                 dispatcher.utter_message(text=f"மீள்நிரப்பிய தொகை மறுபடியும் கணக்கிற்கே அனுப்பிவைக்கப்பட்டுள்ளது. "
                                               f"தாெகை: {amount}, கணக்கிலக்கம்: {account}")
-                SlotSet(key="time_after_last_reload", value=None)
+                return [SlotSet(key="time_after_last_reload", value=None)]
 
             elif time.time() - last_reload_time < 30:
                 dispatcher.utter_message(text="இக் கோரிக்கை தேவையற்றது. மீள்நிரப்பலை தடை செய்ய முடியும்.")
@@ -157,6 +159,9 @@ class ActionCoverage(Action):
         # i am keeping this simple by just asking district and province
         province = tracker.get_slot("province")
         district = tracker.get_slot("district")
+
+        # note that I haven't added the place logic: for example bot doesn't know Jaffna is in Nothern province
+        # that kind of logic is redundant for the purpose of this project and kind of waste of time for me
 
         # see above comments for info about randomness
         if ActionCoverage.success_or_failure(district):
